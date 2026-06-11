@@ -12,3 +12,4 @@ c:\Users\User\Desktop\Practika_Liza\obj\Debug\net8.0\refint\StudentGroupApp.dll
 c:\Users\User\Desktop\Practika_Liza\obj\Debug\net8.0\StudentGroupApp.pdb
 c:\Users\User\Desktop\Practika_Liza\obj\Debug\net8.0\StudentGroupApp.genruntimeconfig.cache
 c:\Users\User\Desktop\Practika_Liza\obj\Debug\net8.0\ref\StudentGroupApp.dll
+c:\Users\User\Desktop\Practika_Liza\obj\Debug\net8.0\StudentGroupApp.sourcelink.json
