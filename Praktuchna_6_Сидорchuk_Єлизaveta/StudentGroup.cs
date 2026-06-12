@@ -1,11 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Praktuchna_5;
+namespace Praktuchna_6;
 
 public class StudentGroup
 {
-    private readonly List<Student> _students = new();
+    private readonly Repository<Student> _studentRepository = new();
 
     public string GroupName { get; set; } = "К-320";
 
@@ -15,23 +15,27 @@ public class StudentGroup
 
     public Teacher? Curator { get; set; }
 
-    public int GroupSize => _students.Count;
+    private List<Student> StudentsInternal => _studentRepository.GetAll();
+
+    public int GroupSize => StudentsInternal.Count;
 
     public double AverageGroupGrade =>
-        _students.Count == 0 ? 0 : _students.Average(student => student.AverageGrade);
+        StudentsInternal.Count == 0 ? 0 : StudentsInternal.Average(student => student.AverageGrade);
 
-    public IReadOnlyList<Student> Students => _students.AsReadOnly();
+    public IReadOnlyList<Student> Students => StudentsInternal.AsReadOnly();
 
     public Student this[int index]
     {
         get
         {
-            if (index < 0 || index >= _students.Count)
+            List<Student> students = StudentsInternal;
+
+            if (index < 0 || index >= students.Count)
             {
                 throw new StudentNotFoundException("Студента з таким індексом не знайдено.");
             }
 
-            return _students[index];
+            return students[index];
         }
     }
 
@@ -44,23 +48,23 @@ public class StudentGroup
     {
         ArgumentNullException.ThrowIfNull(student);
 
-        if (_students.Any(existing => existing.RecordBookNumber == student.RecordBookNumber))
+        if (StudentsInternal.Any(existing => existing.RecordBookNumber == student.RecordBookNumber))
         {
             throw new InvalidOperationException("Студента з таким номером залікової книжки вже додано.");
         }
 
-        _students.Add(student);
+        _studentRepository.Add(student);
     }
 
     public void RemoveStudent(string recordBookNumber)
     {
         Student student = FindStudent(recordBookNumber);
-        _students.Remove(student);
+        _studentRepository.Remove(student);
     }
 
     public Student FindStudent(string recordBookNumber)
     {
-        Student? student = _students.FirstOrDefault(item => item.RecordBookNumber == recordBookNumber);
+        Student? student = StudentsInternal.FirstOrDefault(item => item.RecordBookNumber == recordBookNumber);
 
         if (student == null)
         {
@@ -72,17 +76,17 @@ public class StudentGroup
 
     public List<Student> GetExcellentStudents()
     {
-        return _students.Where(student => student.IsExcellent()).ToList();
+        return StudentsInternal.Where(student => student.IsExcellent()).ToList();
     }
 
     public List<Student> GetStudentsByStatus(Student.StudentStatus status)
     {
-        return _students.Where(student => student.Status == status).ToList();
+        return StudentsInternal.Where(student => student.Status == status).ToList();
     }
 
     public void SortStudentsByGrade()
     {
-        _students.Sort((first, second) => second.CompareTo(first));
+        StudentsInternal.Sort((first, second) => second.CompareTo(first));
     }
 
     public void CloneStudent(string recordBookNumber)
@@ -91,7 +95,7 @@ public class StudentGroup
         Student clone = (Student)original.Clone();
         clone.FullName = original.FullName + " (Copy)";
         clone.RecordBookNumber = GenerateUniqueRecordBookNumber(original.RecordBookNumber);
-        _students.Add(clone);
+        _studentRepository.Add(clone);
     }
 
     public void SaveToFile(string filePath)
@@ -102,7 +106,7 @@ public class StudentGroup
             Specialty = Specialty,
             Course = Course,
             Curator = Curator,
-            Students = _students
+            Students = StudentsInternal
         };
 
         JsonSerializerOptions options = new()
@@ -142,8 +146,8 @@ public class StudentGroup
         Specialty = data.Specialty;
         Course = data.Course;
         Curator = data.Curator;
-        _students.Clear();
-        _students.AddRange(data.Students);
+        StudentsInternal.Clear();
+        StudentsInternal.AddRange(data.Students);
     }
 
     private string GenerateUniqueRecordBookNumber(string sourceNumber)
@@ -159,7 +163,7 @@ public class StudentGroup
                 number = 10000000;
             }
         }
-        while (_students.Any(student => student.RecordBookNumber == number.ToString("D8")));
+        while (StudentsInternal.Any(student => student.RecordBookNumber == number.ToString("D8")));
 
         return number.ToString("D8");
     }

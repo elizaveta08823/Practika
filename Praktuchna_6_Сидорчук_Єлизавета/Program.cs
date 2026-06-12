@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Praktuchna_5;
+namespace Praktuchna_6;
 
 internal class Program
 {
@@ -120,6 +120,12 @@ internal class Program
                     catch (StudentNotFoundException ex) { WriteError(ex.Message); }
                     catch (Exception ex) { WriteError(ex.Message); }
                     break;
+                case "17":
+                    try { DemonstrateGenerics(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
+                    break;
                 case "0":
                     isRunning = false;
                     break;
@@ -142,7 +148,7 @@ internal class Program
 
     private static void ShowMenu()
     {
-        Console.WriteLine("=== Група К-320 | Сидорчук Єлизавета | Практична робота №5 ===");
+        Console.WriteLine("=== Група К-320 | Сидорчук Єлизавета | Практична робота №6 ===");
         Console.WriteLine($"Група: {Group.GroupName} | Спеціальність: {Group.Specialty} | Курс: {Group.Course}");
         Console.WriteLine("1. Додати студента");
         Console.WriteLine("2. Видалити студента");
@@ -160,6 +166,7 @@ internal class Program
         Console.WriteLine("14. Отримати студента за індексом або заліковкою");
         Console.WriteLine("15. Перевірити право на стипендію");
         Console.WriteLine("16. Штучна генерація помилки");
+        Console.WriteLine("17. Демонстрація роботи Generics");
         Console.WriteLine("0. Вихід");
     }
 
@@ -446,6 +453,32 @@ internal class Program
         else
         {
             Console.WriteLine("Невірний вибір.");
+        }
+    }
+
+    private static void DemonstrateGenerics()
+    {
+        Repository<Teacher> teacherRepository = new();
+
+        Teacher teacher = new()
+        {
+            FullName = "Петренко Олена Іванівна",
+            DateOfBirth = new DateTime(1985, 3, 15),
+            PersonalEmail = "petrenko@university.edu.ua",
+            Department = "Кафедра програмної інженерії",
+            ExperienceYears = 12
+        };
+
+        teacherRepository.Add(teacher);
+
+        Console.WriteLine("Універсальний репозиторій Repository<Teacher>:");
+        Console.WriteLine($"Кількість викладачів: {teacherRepository.GetAll().Count}");
+        Console.WriteLine();
+
+        foreach (Teacher item in teacherRepository.GetAll())
+        {
+            item.ShowDetailedInfo();
+            Console.WriteLine();
         }
     }
 

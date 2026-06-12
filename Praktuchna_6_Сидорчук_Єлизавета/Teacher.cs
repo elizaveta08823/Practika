@@ -1,4 +1,4 @@
-namespace Praktuchna_5;
+namespace Praktuchna_6;
 
 public class Teacher : Person
 {

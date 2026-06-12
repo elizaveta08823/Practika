@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Praktuchna_5;
+namespace Praktuchna_6;
 
 public class Student : Person, IEntity, IComparable<Student>, ICloneable
 {

@@ -7,6 +7,6 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Praktuchna_5_Сидорчук_Єлизавета\**\*.cs" />
+    <Compile Include="Praktuchna_6_Сидорчук_Єлизавета\**\*.cs" />
   </ItemGroup>
 </Project>
