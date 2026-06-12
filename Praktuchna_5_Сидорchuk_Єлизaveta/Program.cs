@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Praktuchna_4;
+namespace Praktuchna_5;
 
 internal class Program
 {
@@ -25,49 +25,100 @@ internal class Program
             switch (choice)
             {
                 case "1":
-                    AddStudent();
+                    try { AddStudent(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "2":
-                    RemoveStudent();
+                    try { RemoveStudent(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "3":
-                    ShowAllStudents();
+                    try { ShowAllStudents(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "4":
-                    SearchStudent();
+                    try { SearchStudent(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "5":
-                    EditStudent();
+                    try { EditStudent(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "6":
-                    ShowExcellentStudents();
+                    try { ShowExcellentStudents(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "7":
-                    ShowStatistics();
+                    try { ShowStatistics(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "8":
-                    SaveOrLoadData();
+                    try { SaveOrLoadData(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "9":
-                    AssignCurator();
+                    try { AssignCurator(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "10":
-                    ShowCuratorInfo();
+                    try { ShowCuratorInfo(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "11":
-                    SortStudentsByGrade();
+                    try { SortStudentsByGrade(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "12":
-                    CloneStudentByRecordBook();
+                    try { CloneStudentByRecordBook(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "13":
-                    CompareStudentsByGrade();
+                    try { CompareStudentsByGrade(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "14":
-                    GetStudentByIndexer();
+                    try { GetStudentByIndexer(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "15":
-                    CheckScholarshipEligibility();
+                    try { CheckScholarshipEligibility(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
+                    break;
+                case "16":
+                    try { GenerateArtificialError(); }
+                    catch (InvalidStudentDataException ex) { WriteError(ex.Message); }
+                    catch (StudentNotFoundException ex) { WriteError(ex.Message); }
+                    catch (Exception ex) { WriteError(ex.Message); }
                     break;
                 case "0":
                     isRunning = false;
@@ -81,9 +132,17 @@ internal class Program
         }
     }
 
+    private static void WriteError(string message)
+    {
+        ConsoleColor previousColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(message);
+        Console.ForegroundColor = previousColor;
+    }
+
     private static void ShowMenu()
     {
-        Console.WriteLine("=== Група К-320 | Сидорчук Єлизавета | Практична робота №4 ===");
+        Console.WriteLine("=== Група К-320 | Сидорчук Єлизавета | Практична робота №5 ===");
         Console.WriteLine($"Група: {Group.GroupName} | Спеціальність: {Group.Specialty} | Курс: {Group.Course}");
         Console.WriteLine("1. Додати студента");
         Console.WriteLine("2. Видалити студента");
@@ -100,36 +159,23 @@ internal class Program
         Console.WriteLine("13. Порівняти двох студентів за балами");
         Console.WriteLine("14. Отримати студента за індексом або заліковкою");
         Console.WriteLine("15. Перевірити право на стипендію");
+        Console.WriteLine("16. Штучна генерація помилки");
         Console.WriteLine("0. Вихід");
     }
 
     private static void AddStudent()
     {
-        try
-        {
-            Student student = ReadStudentFromConsole();
-            Group.AddStudent(student);
-            Console.WriteLine("Студента успішно додано.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Помилка: {ex.Message}");
-        }
+        Student student = ReadStudentFromConsole();
+        Group.AddStudent(student);
+        Console.WriteLine("Студента успішно додано.");
     }
 
     private static void RemoveStudent()
     {
         Console.Write("Введіть номер залікової книжки: ");
         string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-
-        if (Group.RemoveStudent(recordBookNumber))
-        {
-            Console.WriteLine("Студента видалено.");
-        }
-        else
-        {
-            Console.WriteLine("Студента не знайдено.");
-        }
+        Group.RemoveStudent(recordBookNumber);
+        Console.WriteLine("Студента видалено.");
     }
 
     private static void ShowAllStudents()
@@ -155,14 +201,7 @@ internal class Program
     {
         Console.Write("Введіть номер залікової книжки: ");
         string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-        Student? student = Group.FindStudent(recordBookNumber);
-
-        if (student == null)
-        {
-            Console.WriteLine("Студента не знайдено.");
-            return;
-        }
-
+        Student student = Group.FindStudent(recordBookNumber);
         student.ShowDetailedInfo();
     }
 
@@ -170,63 +209,50 @@ internal class Program
     {
         Console.Write("Введіть номер залікової книжки студента для редагування: ");
         string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-        Student? student = Group.FindStudent(recordBookNumber);
+        Student student = Group.FindStudent(recordBookNumber);
 
-        if (student == null)
+        Console.WriteLine("Залиште поле порожнім, щоб не змінювати значення.");
+        Console.Write($"ПІБ [{student.FullName}]: ");
+        string? fullName = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(fullName))
         {
-            Console.WriteLine("Студента не знайдено.");
-            return;
+            student.FullName = fullName;
         }
 
-        try
+        Console.Write($"Електронна пошта [{student.PersonalEmail}]: ");
+        string? email = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(email))
         {
-            Console.WriteLine("Залиште поле порожнім, щоб не змінювати значення.");
-            Console.Write($"ПІБ [{student.FullName}]: ");
-            string? fullName = Console.ReadLine();
-
-            if (!string.IsNullOrWhiteSpace(fullName))
-            {
-                student.FullName = fullName;
-            }
-
-            Console.Write($"Електронна пошта [{student.PersonalEmail}]: ");
-            string? email = Console.ReadLine();
-
-            if (!string.IsNullOrWhiteSpace(email))
-            {
-                student.PersonalEmail = email;
-            }
-
-            Console.Write($"Статус (Active/AcademicLeave/Expelled/Graduated) [{student.Status}]: ");
-            string? statusInput = Console.ReadLine();
-
-            if (!string.IsNullOrWhiteSpace(statusInput) && Enum.TryParse(statusInput, true, out Student.StudentStatus status))
-            {
-                student.Status = status;
-            }
-
-            Console.Write($"Середній бал [{student.AverageGrade:F2}]: ");
-            string? gradeInput = Console.ReadLine();
-
-            if (!string.IsNullOrWhiteSpace(gradeInput) && double.TryParse(gradeInput, out double grade))
-            {
-                student.UpdateAverageGrade(grade);
-            }
-
-            Console.Write($"Примітки [{student.Notes}]: ");
-            string? notes = Console.ReadLine();
-
-            if (notes != null)
-            {
-                student.SetNotes(notes);
-            }
-
-            Console.WriteLine("Дані студента оновлено.");
+            student.PersonalEmail = email;
         }
-        catch (Exception ex)
+
+        Console.Write($"Статус (Active/AcademicLeave/Expelled/Graduated) [{student.Status}]: ");
+        string? statusInput = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(statusInput) && Enum.TryParse(statusInput, true, out Student.StudentStatus status))
         {
-            Console.WriteLine($"Помилка: {ex.Message}");
+            student.Status = status;
         }
+
+        Console.Write($"Середній бал [{student.AverageGrade:F2}]: ");
+        string? gradeInput = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(gradeInput) && double.TryParse(gradeInput, out double grade))
+        {
+            student.UpdateAverageGrade(grade);
+        }
+
+        Console.Write($"Примітки [{student.Notes}]: ");
+        string? notes = Console.ReadLine();
+
+        if (notes != null)
+        {
+            student.SetNotes(notes);
+        }
+
+        Console.WriteLine("Дані студента оновлено.");
     }
 
     private static void ShowExcellentStudents()
@@ -268,41 +294,27 @@ internal class Program
         Console.Write("Оберіть дію: ");
         string? choice = Console.ReadLine();
 
-        try
+        if (choice == "1")
         {
-            if (choice == "1")
-            {
-                Group.SaveToFile(DataFilePath);
-                Console.WriteLine($"Дані збережено у файл: {DataFilePath}");
-            }
-            else if (choice == "2")
-            {
-                Group.LoadFromFile(DataFilePath);
-                Console.WriteLine($"Дані завантажено з файлу: {DataFilePath}");
-            }
-            else
-            {
-                Console.WriteLine("Невірний вибір.");
-            }
+            Group.SaveToFile(DataFilePath);
+            Console.WriteLine($"Дані збережено у файл: {DataFilePath}");
         }
-        catch (Exception ex)
+        else if (choice == "2")
         {
-            Console.WriteLine($"Помилка: {ex.Message}");
+            Group.LoadFromFile(DataFilePath);
+            Console.WriteLine($"Дані завантажено з файлу: {DataFilePath}");
+        }
+        else
+        {
+            Console.WriteLine("Невірний вибір.");
         }
     }
 
     private static void AssignCurator()
     {
-        try
-        {
-            Teacher curator = ReadTeacherFromConsole();
-            Group.Curator = curator;
-            Console.WriteLine("Куратора групи успішно призначено.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Помилка: {ex.Message}");
-        }
+        Teacher curator = ReadTeacherFromConsole();
+        Group.Curator = curator;
+        Console.WriteLine("Куратора групи успішно призначено.");
     }
 
     private static void ShowCuratorInfo()
@@ -332,15 +344,8 @@ internal class Program
     {
         Console.Write("Введіть номер залікової книжки: ");
         string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-
-        if (Group.CloneStudent(recordBookNumber))
-        {
-            Console.WriteLine("Студента успішно клоновано.");
-        }
-        else
-        {
-            Console.WriteLine("Студента не знайдено.");
-        }
+        Group.CloneStudent(recordBookNumber);
+        Console.WriteLine("Студента успішно клоновано.");
     }
 
     private static void CompareStudentsByGrade()
@@ -350,14 +355,8 @@ internal class Program
         Console.Write("Номер залікової книжки другого студента: ");
         string secondNumber = Console.ReadLine()?.Trim() ?? string.Empty;
 
-        Student? firstStudent = Group.FindStudent(firstNumber);
-        Student? secondStudent = Group.FindStudent(secondNumber);
-
-        if (firstStudent == null || secondStudent == null)
-        {
-            Console.WriteLine("Один або обидва студенти не знайдені.");
-            return;
-        }
+        Student firstStudent = Group.FindStudent(firstNumber);
+        Student secondStudent = Group.FindStudent(secondNumber);
 
         if (firstStudent > secondStudent)
         {
@@ -386,37 +385,29 @@ internal class Program
         Console.Write("Оберіть спосіб: ");
         string? choice = Console.ReadLine();
 
-        try
+        if (choice == "1")
         {
-            if (choice == "1")
-            {
-                Console.Write($"Введіть індекс (від 0 до {Group.GroupSize - 1}): ");
-                string? indexInput = Console.ReadLine();
+            Console.Write($"Введіть індекс (від 0 до {Group.GroupSize - 1}): ");
+            string? indexInput = Console.ReadLine();
 
-                if (!int.TryParse(indexInput, out int index))
-                {
-                    Console.WriteLine("Некоректний індекс.");
-                    return;
-                }
+            if (!int.TryParse(indexInput, out int index))
+            {
+                throw new InvalidStudentDataException("Некоректний індекс.");
+            }
 
-                Student student = Group[index];
-                student.ShowDetailedInfo();
-            }
-            else if (choice == "2")
-            {
-                Console.Write("Введіть номер залікової книжки: ");
-                string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-                Student student = Group[recordBookNumber];
-                student.ShowDetailedInfo();
-            }
-            else
-            {
-                Console.WriteLine("Невірний вибір.");
-            }
+            Student student = Group[index];
+            student.ShowDetailedInfo();
         }
-        catch (Exception ex)
+        else if (choice == "2")
         {
-            Console.WriteLine($"Помилка: {ex.Message}");
+            Console.Write("Введіть номер залікової книжки: ");
+            string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
+            Student student = Group[recordBookNumber];
+            student.ShowDetailedInfo();
+        }
+        else
+        {
+            Console.WriteLine("Невірний вибір.");
         }
     }
 
@@ -424,13 +415,7 @@ internal class Program
     {
         Console.Write("Введіть номер залікової книжки: ");
         string recordBookNumber = Console.ReadLine()?.Trim() ?? string.Empty;
-        Student? student = Group.FindStudent(recordBookNumber);
-
-        if (student == null)
-        {
-            Console.WriteLine("Студента не знайдено.");
-            return;
-        }
+        Student student = Group.FindStudent(recordBookNumber);
 
         if (student.IsEligibleForScholarship())
         {
@@ -439,6 +424,28 @@ internal class Program
         else
         {
             Console.WriteLine($"{student.FullName} не має права на стипендію.");
+        }
+    }
+
+    private static void GenerateArtificialError()
+    {
+        Console.WriteLine("1. Створити студента з порожнім іменем");
+        Console.WriteLine("2. Знайти неіснуючого студента");
+        Console.Write("Оберіть варіант: ");
+        string? choice = Console.ReadLine();
+
+        if (choice == "1")
+        {
+            Student student = new();
+            student.FullName = string.Empty;
+        }
+        else if (choice == "2")
+        {
+            Group.FindStudent("00000000");
+        }
+        else
+        {
+            Console.WriteLine("Невірний вибір.");
         }
     }
 

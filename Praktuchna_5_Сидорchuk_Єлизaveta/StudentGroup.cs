@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Praktuchna_4;
+namespace Praktuchna_5;
 
 public class StudentGroup
 {
@@ -28,7 +28,7 @@ public class StudentGroup
         {
             if (index < 0 || index >= _students.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new StudentNotFoundException("Студента з таким індексом не знайдено.");
             }
 
             return _students[index];
@@ -37,17 +37,7 @@ public class StudentGroup
 
     public Student this[string recordBookNumber]
     {
-        get
-        {
-            Student? student = FindStudent(recordBookNumber);
-
-            if (student == null)
-            {
-                throw new KeyNotFoundException("Студента не знайдено.");
-            }
-
-            return student;
-        }
+        get => FindStudent(recordBookNumber);
     }
 
     public void AddStudent(Student student)
@@ -62,21 +52,22 @@ public class StudentGroup
         _students.Add(student);
     }
 
-    public bool RemoveStudent(string recordBookNumber)
+    public void RemoveStudent(string recordBookNumber)
     {
-        Student? student = FindStudent(recordBookNumber);
+        Student student = FindStudent(recordBookNumber);
+        _students.Remove(student);
+    }
+
+    public Student FindStudent(string recordBookNumber)
+    {
+        Student? student = _students.FirstOrDefault(item => item.RecordBookNumber == recordBookNumber);
 
         if (student == null)
         {
-            return false;
+            throw new StudentNotFoundException($"Студента з номером залікової книжки {recordBookNumber} не знайдено.");
         }
 
-        return _students.Remove(student);
-    }
-
-    public Student? FindStudent(string recordBookNumber)
-    {
-        return _students.FirstOrDefault(student => student.RecordBookNumber == recordBookNumber);
+        return student;
     }
 
     public List<Student> GetExcellentStudents()
@@ -94,21 +85,13 @@ public class StudentGroup
         _students.Sort((first, second) => second.CompareTo(first));
     }
 
-    public bool CloneStudent(string recordBookNumber)
+    public void CloneStudent(string recordBookNumber)
     {
-        Student? original = FindStudent(recordBookNumber);
-
-        if (original == null)
-        {
-            return false;
-        }
-
+        Student original = FindStudent(recordBookNumber);
         Student clone = (Student)original.Clone();
         clone.FullName = original.FullName + " (Copy)";
         clone.RecordBookNumber = GenerateUniqueRecordBookNumber(original.RecordBookNumber);
         _students.Add(clone);
-
-        return true;
     }
 
     public void SaveToFile(string filePath)
