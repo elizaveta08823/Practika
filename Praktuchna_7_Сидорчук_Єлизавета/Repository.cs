@@ -1,4 +1,4 @@
-namespace Praktuchna_6;
+namespace Praktuchna_7;
 
 public class Repository<T> : IRepository<T> where T : class
 {

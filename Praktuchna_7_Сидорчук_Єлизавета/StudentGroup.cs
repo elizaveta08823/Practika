@@ -1,10 +1,13 @@
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Praktuchna_6;
+namespace Praktuchna_7;
 
 public class StudentGroup
 {
+    public delegate void GroupNotificationHandler(string message);
+
     private readonly Repository<Student> _studentRepository = new();
 
     public string GroupName { get; set; } = "К-320";
@@ -14,6 +17,8 @@ public class StudentGroup
     public int Course { get; set; } = 3;
 
     public Teacher? Curator { get; set; }
+
+    public event GroupNotificationHandler? OnStudentAdded;
 
     private List<Student> StudentsInternal => _studentRepository.GetAll();
 
@@ -54,6 +59,7 @@ public class StudentGroup
         }
 
         _studentRepository.Add(student);
+        OnStudentAdded?.Invoke($"Студента {student.FullName} успішно додано до групи {GroupName}.");
     }
 
     public void RemoveStudent(string recordBookNumber)
@@ -82,6 +88,23 @@ public class StudentGroup
     public List<Student> GetStudentsByStatus(Student.StudentStatus status)
     {
         return StudentsInternal.Where(student => student.Status == status).ToList();
+    }
+
+    public List<Student> GetTopStudents(int count)
+    {
+        return StudentsInternal
+            .OrderByDescending(student => student.AverageGrade)
+            .Take(count)
+            .ToList();
+    }
+
+    public double GetAverageGradeOfActiveStudents()
+    {
+        List<Student> activeStudents = StudentsInternal
+            .Where(student => student.Status == Student.StudentStatus.Active)
+            .ToList();
+
+        return activeStudents.Count == 0 ? 0 : activeStudents.Average(student => student.AverageGrade);
     }
 
     public void SortStudentsByGrade()
