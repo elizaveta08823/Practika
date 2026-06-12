@@ -8,17 +8,17 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\User\\AppData\\Local\\Temp\\cursor-sandbox-cache\\ce7026eb1d1401c4e35eb4faf9571288\\nuget": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\User\\Desktop\\Practika_Liza\\StudentGroupApp.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Practika_Liza\\StudentGroupApp.csproj",
       "projectName": "StudentGroupApp",
-      "projectPath": "c:\\Users\\User\\Desktop\\Practika_Liza\\StudentGroupApp.csproj",
-      "packagesPath": "C:\\Users\\User\\AppData\\Local\\Temp\\cursor-sandbox-cache\\ce7026eb1d1401c4e35eb4faf9571288\\nuget",
-      "outputPath": "c:\\Users\\User\\Desktop\\Practika_Liza\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\Practika_Liza\\StudentGroupApp.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Practika_Liza\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
